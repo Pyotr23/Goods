@@ -6,6 +6,7 @@
 
 @(Html.DevExtreme().DataGrid<Good>()
                 .ShowBorders(true)
+                .Sorting(sorting => sorting.Mode(GridSortingMode.Multiple))
                 .Paging(paging => paging.PageSize(30))
                 .Pager(pager =>
                 {
