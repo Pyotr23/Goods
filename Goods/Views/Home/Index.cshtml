@@ -1,8 +1,8 @@
-@section HeadExtras {
+@*@section HeadExtras {
     <script src="https://unpkg.com/devextreme-intl/dist/devextreme-intl.min.js"></script>
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en,Intl.~locale.de,Intl.~locale.ru"></script>
     <script src="~/js/devextreme/localization/dx.messages.ru.js"></script>
-}
+}*@
 
 @(Html.DevExtreme().DataGrid<Good>()
                 .ShowBorders(true)
@@ -18,7 +18,12 @@
                     .Deferred(true))
                 .Columns(c =>
                 {
-                    c.AddFor(m => m.Id).Caption("Привет Hello");
+                    c.AddFor(m => m.Id).Caption("Kod tovara").Visible(false);
+                    c.AddFor(m => m.Description).Caption("Naimenovanie");
+                    c.AddFor(m => m.Quantity).Format("#,##0.##").Caption("Koli4estvo");
+                    c.AddFor(m => m.Unit).Caption("Ed.izm.");
+                    c.AddFor(m => m.Price).Format("#,##0.##").Caption("Cena");
+                    c.AddFor(m => m.CreationDate).Format("dd.mm.yyyy hh:mm:ss").Caption("Data sozdaniya").Visible(DateTime.Now.Day % 2 == 0);
                 })
                 //.FilterRow(f => f.Visible(true))
                 .DataSource(Model, new string[] { "Id" })
