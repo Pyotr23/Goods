@@ -1,53 +1,56 @@
-﻿@*@section HeadExtras {
-        <script src="https://unpkg.com/devextreme-intl/dist/devextreme-intl.min.js"></script>
-        <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en,Intl.~locale.de,Intl.~locale.ru"></script>
-        <script src="https://cdn3.devexpress.com/jslib/18.2.7/js/localization/dx.messages.de.js"></script>
-        <script src="https://cdn3.devexpress.com/jslib/18.2.7/js/localization/dx.messages.ru.js"></script>
-    }*@
+﻿@section Localization {
+    <script src="https://unpkg.com/devextreme-intl/dist/devextreme-intl.min.js"></script>
+    @*<script src="~/Scripts/localization/dx.messages.de.js"></script>*@
+    @*<script src="~/Scripts/localization/dx.messages.ru.js"></script>*@
+    <script src="~/js/devextreme/localization/dx.messages.ru.js"></script>
+}
 
-<script src="@Url.Action("CldrData", "ControllerName", new { t = CldrDataScriptBuilder.GetCacheParam() })"></script>
-<script src="~/Scripts/localization/dx.messages.de.js"></script>
 
 @(Html.DevExtreme().DataGrid<Good>()
-            .ID("gridContainer")
-            .ShowBorders(true)
-            .Sorting(sorting => sorting.Mode(GridSortingMode.Multiple))
-            .FilterRow(filterRow => filterRow
-                .Visible(true)
-                .ApplyFilter(GridApplyFilterMode.OnClick)
-            )
-            .AllowColumnReordering(true)
-            .AllowColumnResizing(true)
-            .Paging(paging => paging.PageSize(30))
-            .Pager(pager =>
-            {
-                pager.ShowPageSizeSelector(true);
-                pager.AllowedPageSizes(new List<int> { 20, 30, 50 });
-                pager.ShowInfo(true);
-            })
-            .Selection(s => s
-                .Mode(SelectionMode.Multiple)
-                .Deferred(true))
-            .Export(e => e
-                .Enabled(true)
-                .FileName($"Товары {DateTime.Now.ToShortDateString()}-{DateTime.Now.ToShortTimeString()}")
-                //.AllowExportSelectedData(true)
-                //.ExcelFilterEnabled(true)
-                )
-            .ColumnAutoWidth(true)
-            .Columns(c =>
-            {
-                c.AddFor(m => m.Id).Caption("Код товара").DataType(GridColumnDataType.Number).Visible(false);
-                c.AddFor(m => m.Description).Caption("Наименование").DataType(GridColumnDataType.String).Alignment(HorizontalAlignment.Left);
-                c.AddFor(m => m.Quantity).DataType(GridColumnDataType.Number)/*.Format("#,##0.##")*/.Caption("Количество");
-                c.AddFor(m => m.Unit).Caption("Ед. изм.").DataType(GridColumnDataType.String).Alignment(HorizontalAlignment.Left);
-                c.AddFor(m => m.Price)/*.Format("#,##0.##")*/.Caption("Цена").DataType(GridColumnDataType.Number);
-                c.AddFor(m => m.CreationDate)/*.Format("dd.mm.yyyy hh:mm:ss")*/.Caption("Дата создания")
-                    .DataType(GridColumnDataType.DateTime)
-                    .Visible(DateTime.Now.Day % 2 == 0)
-                    .Alignment(HorizontalAlignment.Left);
-            })
-            .DataSource(Model, new string[] { "Id" })
+                    .ID("gridContainer")
+                    .ShowBorders(true)
+                    .Sorting(sorting => sorting.Mode(GridSortingMode.Multiple))
+                    .FilterRow(filterRow => filterRow
+                        .Visible(true)
+                        .ApplyFilter(GridApplyFilterMode.OnClick)
+                    )
+                    .AllowColumnReordering(true)
+                    .AllowColumnResizing(true)
+                    .Paging(paging => paging.PageSize(30))
+                    .Pager(pager =>
+                    {
+                        pager.ShowPageSizeSelector(true);
+                        pager.AllowedPageSizes(new List<int> { 20, 30, 50 });
+                        pager.ShowInfo(true);
+                    })
+                    .Selection(s => s
+                        .Mode(SelectionMode.Multiple)
+                        .Deferred(true))
+                    .Export(e => e
+                        .Enabled(true)
+                        .FileName($"Товары {DateTime.Now.ToShortDateString()}-{DateTime.Now.ToShortTimeString()}")
+                        //.AllowExportSelectedData(true)
+                        .ExcelFilterEnabled(true)
+                        )
+                    .ColumnAutoWidth(true)
+                    .Columns(c =>
+                    {
+                        c.AddFor(m => m.Id).Caption("Код товара").DataType(GridColumnDataType.Number).Visible(false);
+                        c.AddFor(m => m.Description).Caption("Наименование").DataType(GridColumnDataType.String).Alignment(HorizontalAlignment.Left);
+                        c.AddFor(m => m.Quantity).DataType(GridColumnDataType.Number).Caption("Количество");
+                        c.AddFor(m => m.Unit).Caption("Ед. изм.").DataType(GridColumnDataType.String).Alignment(HorizontalAlignment.Left);
+                        c.AddFor(m => m.Price).Caption("Цена").DataType(GridColumnDataType.Number);
+                        c.AddFor(m => m.CreationDate).Caption("Дата создания")
+                            .DataType(GridColumnDataType.DateTime)
+                            .Visible(DateTime.Now.Day % 2 == 0)
+                            .Alignment(HorizontalAlignment.Left);
+                    })
+                    
+                    .DataSource(Model, new string[] { "Id" })
 )
+
+<script>
+    DevExpress.localization.locale("ru");
+</script>
 
 
